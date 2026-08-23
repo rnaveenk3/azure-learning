@@ -25,6 +25,7 @@ steps:
     workingDirectory: '$(tfWorkingDir)'
     inlineScript: |
       pwd
+      ls -la
       terraform init \
         -backend-config="resource_group_name=HandsON" \
         -backend-config="storage_account_name=firststgeaccntnaveearch" \
