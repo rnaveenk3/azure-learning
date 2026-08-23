@@ -5,7 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  tfWorkingDir: '$(Build.SourcesDirectory)/subscription'
+  tfWorkingDir: '$(Build.SourcesDirectory)/subscriptions'
 
 steps:
 
