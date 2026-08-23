@@ -1,0 +1,44 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  tfWorkingDir: '$(Build.SourcesDirectory)/subscription'
+
+steps:
+
+- script: |
+    wget https://releases.hashicorp.com/terraform/1.13.0/terraform_1.13.0_linux_amd64.zip
+    unzip terraform_1.13.0_linux_amd64.zip
+    sudo mv terraform /usr/local/bin/
+    terraform version
+  displayName: Install Terraform
+
+- task: AzureCLI@2
+  displayName: Terraform Plan
+  inputs:
+    azureSubscription: 'nav-azure-terraform-prod-2'
+    scriptType: bash
+    scriptLocation: inlineScript
+    workingDirectory: '$(tfWorkingDir)'
+    inlineScript: |
+      terraform init \
+        -backend-config="resource_group_name=HandsON" \
+        -backend-config="storage_account_name=firststgeaccntnaveearch" \
+        -backend-config="container_name=tfstate" \
+        -backend-config="key=terraform.tfstate"
+
+      terraform validate
+      terraform plan -out=tfplan
+
+- task: AzureCLI@2
+  displayName: Terraform Apply
+  inputs:
+    azureSubscription: 'nav-azure-terraform-prod-2'
+    scriptType: bash
+    scriptLocation: inlineScript
+    workingDirectory: '$(tfWorkingDir)'
+    inlineScript: |
+      terraform apply -auto-approve tfplan
