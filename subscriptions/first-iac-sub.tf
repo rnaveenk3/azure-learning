@@ -2,8 +2,8 @@ module "app1_prod" {
 
   source = "../modules/subscription-vending"
 
-  subscription_name  = "alcon-app1-prod"
-  subscription_alias = "alcon-app1-prod"
+  subscription_name  = "alcon-app1-dev"
+  subscription_alias = "alcon-app1-dev"
 
   billing_scope = "/providers/Microsoft.Billing/billingAccounts/8b167c09-df3a-5973-5c19-1a94131b966a:dfe0f4b8-4995-4045-9db2-33d1f0d8ac5d_2019-05-31/billingProfiles/ES2C-BE4M-BG7-PGB/invoiceSections/6549736f-1807-46c9-9fd1-09abaaeb12e4"
   
